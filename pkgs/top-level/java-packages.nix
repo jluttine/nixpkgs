@@ -312,7 +312,4 @@ in {
 
   inherit (callPackage ../development/java-modules/xml-apis { inherit fetchMaven; })
     xmlApis_1_3_03;
-
-  inherit (callPackage ../development/java-modules/traccar { inherit mavenbuild fetchMaven; })
-    traccar_4_2;
 }
