@@ -1908,6 +1908,8 @@ in
 
   interlock = callPackage ../servers/interlock {};
 
+  jami-daemon = callPackage ../applications/networking/instant-messengers/jami-daemon { };
+
   jellyfin = callPackage ../servers/jellyfin { ffmpeg = ffmpeg_4; };
 
   jellyfin-mpv-shim = python3Packages.callPackage ../applications/video/jellyfin-mpv-shim { };
@@ -2137,8 +2139,6 @@ in
     rainloop-standard;
 
   rav1e = callPackage ../tools/video/rav1e { };
-
-  ring-daemon = callPackage ../applications/networking/instant-messengers/ring-daemon { };
 
   riot-desktop = callPackage ../applications/networking/instant-messengers/riot/riot-desktop.nix { };
 
