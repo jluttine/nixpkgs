@@ -1,0 +1,23 @@
+diff --git a/package.json b/package.json
+index b9a3c87e..1919a9fa 100644
+--- a/package.json
++++ b/package.json
+@@ -16,8 +16,6 @@
+     "start-debug-hot": "npm run start-hot -- --debug=5858",
+     "package": "cross-env NODE_ENV=production node -r babel-register -r babel-polyfill webpack/package.js",
+     "package-all": "npm run package -- --all",
+-    "postinstall": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
+-    "preinstall": "which electron || npm install electron@1.4.15",
+     "dev": "npm run purge-translations && concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
+     "debug": "concurrently --kill-others \"npm run hot-server\" \"npm run start-debug-hot\" \"electron-inspector\"",
+     "cleanup": "mop -v",
+@@ -32,9 +30,6 @@
+     "purge-translations": "rm -rf ./translations/messages/app",
+     "build-dll": "webpack --config=webpack/webpack.config.dll.js"
+   },
+-  "bin": {
+-    "electron": "./node_modules/.bin/electron"
+-  },
+   "devDependencies": {
+     "@kadira/storybook": "2.35.3",
+     "asar": "0.12.4",
