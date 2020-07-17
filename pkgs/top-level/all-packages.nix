@@ -1972,6 +1972,8 @@ in
 
   lief = callPackage ../development/libraries/lief {};
 
+  libdecsync = callPackage ../tools/networking/libdecsync { };
+
   libndtypes = callPackage ../development/libraries/libndtypes { };
 
   libxnd = callPackage ../development/libraries/libxnd { };
