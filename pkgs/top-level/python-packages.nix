@@ -887,6 +887,8 @@ in {
 
   lazr-uri = callPackage ../development/python-modules/lazr-uri { };
 
+  libdecsync = callPackage ../development/python-modules/libdecsync { };
+
   libmr = callPackage ../development/python-modules/libmr { };
 
   limitlessled = callPackage ../development/python-modules/limitlessled { };
