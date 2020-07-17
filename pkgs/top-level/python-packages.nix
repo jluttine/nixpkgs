@@ -1441,6 +1441,8 @@ in {
 
   pyvoro = callPackage ../development/python-modules/pyvoro { };
 
+  radicale-storage-decsync = callPackage ../development/python-modules/radicale-storage-decsync { };
+
   relatorio = callPackage ../development/python-modules/relatorio { };
 
   reproject = callPackage ../development/python-modules/reproject { };
