@@ -1,13 +1,15 @@
-{ lib, buildPythonPackage, fetchPypi, ipywidgets, matplotlib }:
+{ lib, buildPythonPackage, fetchPypi, ipywidgets, jupyter-packaging, matplotlib }:
 
 buildPythonPackage rec {
   pname = "ipympl";
-  version = "0.5.8";
+  version = "0.7.0";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "0e2f2e540a2dfea61524b7993fc8552c9236b1aaa3826e1f382c75cb2fa5c382";
+    sha256 = "18dhdm6vqbl7h5hgcwnb2r9i94616zwbnvdq3fslz7fbv1bg7wgh";
   };
+
+  buildInputs = [ jupyter-packaging ];
 
   propagatedBuildInputs = [ ipywidgets matplotlib ];
 
