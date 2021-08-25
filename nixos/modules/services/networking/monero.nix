@@ -155,6 +155,36 @@ in
         '';
       };
 
+      rpc.ssl = {
+
+        enable = lib.mkEnableOption "SSL for Monero RPC";
+
+        key = lib.mkOption {
+          type = lib.types.path;
+          default = "${cfg.dataDir}/ssl-key.pem";
+          defaultText = "foobar";
+          description = ''
+            Key file for securing RPC connections.
+
+            If the key or certificate file does not exist, they are both created
+            automatically.
+          '';
+        };
+
+        certificate = lib.mkOption {
+          type = lib.types.path;
+          default = "${cfg.dataDir}/ssl-certificate.pem";
+          defaultText = "foobar";
+          description = ''
+            Certificate file for securing RPC connections.
+
+            If the key or certificate file does not exist, they are both created
+            automatically.
+          '';
+        };
+
+      };
+
       limits.upload = lib.mkOption {
         type = lib.types.addCheck lib.types.int (x: x >= -1);
         default = -1;
@@ -286,19 +316,34 @@ in
         ${pkgs.envsubst}/bin/envsubst \
           -i ${configFile} \
           -o ${cfg.dataDir}/monerod.conf
+      ''
+        # Create SSL key and certificate if they don't exist yet
+        #
+        # Fingerprint with sudo openssl x509 -in /var/lib/monero/ssl-certificate.pem -fingerprint -sha256:
+        # 73:F6:99:3A:0F:B8:CF:21:29:74:26:A8:89:DC:4A:79:54:37:1F:CC:90:0E:12:22:16:7A:B0:CE:7B:15:05:5C
+        lib.optionalString cfg.rpc.ssl.enable ''
+        if [[ ! -f ${cfg.rpc.ssl.key} || ! -f ${cfg.rpc.ssl.certificate} ]]
+        then
+          ${pkgs.monero-cli}/bin/monero-gen-ssl-cert \
+            --private-key-filename ${cfg.rpc.ssl.key} \
+            --certificate-filename ${cfg.rpc.ssl.certificate}
+        fi
       '';
 
       serviceConfig = {
         User = "monero";
         Group = "monero";
         EnvironmentFile = lib.mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
-        ExecStart = "${lib.getExe' pkgs.monero-cli "monerod"} --config-file=${cfg.dataDir}/monerod.conf --non-interactive";
+        ExecStart = let
+          sslFlags = lib.optionalString cfg.rpc.ssl.enable "--rpc-ssl=enabled --rpc-ssl-private-key=${cfg.rpc.ssl.key} --rpc-ssl-certificate=${cfg.rpc.ssl.certificate}";
+        in "${lib.getExe' pkgs.monero-cli "monerod"} --config-file=${cfg.dataDir}/monerod.conf --non-interactive ${sslFlags}";
         Restart = "always";
         SuccessExitStatus = [
           0
           1
         ];
       };
+
     };
 
     assertions = lib.singleton {
