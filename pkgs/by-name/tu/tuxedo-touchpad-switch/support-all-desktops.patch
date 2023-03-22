@@ -1,0 +1,15 @@
+diff --git a/tuxedo-touchpad-switch.cpp b/tuxedo-touchpad-switch.cpp
+index b5af07c..86829e5 100644
+--- a/tuxedo-touchpad-switch.cpp
++++ b/tuxedo-touchpad-switch.cpp
+@@ -114,10 +114,6 @@ int main() {
+             gracefull_exit(-ret);
+         }
+     }
+-    else {
+-        cout << "Your desktop environment is not supported." << endl;
+-        gracefull_exit(SIGTERM);
+-    }
+     
+     // start empty glib mainloop, required for glib signals to be catched
+     GMainLoop *app = g_main_loop_new(NULL, TRUE);
