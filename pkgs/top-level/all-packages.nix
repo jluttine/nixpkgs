@@ -16655,6 +16655,8 @@ with pkgs;
     buildGoModule = buildGo123Module;
   };
 
+  tvheadend = callPackage ../servers/tvheadend { };
+
   unityhub = callPackage ../development/tools/unityhub { };
 
   vaultenv = haskell.lib.justStaticExecutables haskellPackages.vaultenv;
