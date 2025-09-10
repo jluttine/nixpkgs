@@ -14,18 +14,23 @@
 , bzip2
 , dbus
 , dtv-scan-tables
-, ffmpeg_4
+, ffmpeg
 , gettext
 , gnutar
 , gzip
 , libiconv
+, libdvbcsa
+, libvpx
+, libopus
+, x264
+, x265
 , openssl
 , uriparser
 , zlib
 }:
 
 let
-  version = "4.2.8";
+  version = "4.3-unstable-2026-07-15";
 in stdenv.mkDerivation {
   pname = "tvheadend";
   inherit version;
@@ -33,8 +38,9 @@ in stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "tvheadend";
     repo = "tvheadend";
-    rev = "v${version}";
-    sha256 = "1xq059r2bplaa0nd0wkhw80jfwd962x0h5hgd7fz2yp6largw34m";
+    # There are no releases, so use the latest commit (July 15, 2026)
+    rev = "d27ad88a9fb2a7cf17c42c4b0fa0a5bf05534f08";
+    sha256 = "sha256-b9nHOSCqBvMgn/+YqB/DAJ+ELIIiFL4SHmfWhou/j+U=";
   };
 
   outputs = [
@@ -42,16 +48,16 @@ in stdenv.mkDerivation {
     "man"
   ];
 
-  patches = [
-    # Pull upstream fix for -fno-common toolchain
-    #   https://github.com/tvheadend/tvheadend/pull/1342
-    # TODO: can be removed with 4.3 release.
-    (fetchpatch {
-      name = "fno-common.patch";
-      url = "https://github.com/tvheadend/tvheadend/commit/bd92f1389f1aacdd08e913b0383a0ca9dc223153.patch";
-      sha256 = "17bsx6mnv4pjiayvx1d57dphva0kvlppvnmmaym06dh4524pnly1";
-    })
-  ];
+  # patches = [
+  #   # Pull upstream fix for -fno-common toolchain
+  #   #   https://github.com/tvheadend/tvheadend/pull/1342
+  #   # TODO: can be removed with 4.3 release.
+  #   (fetchpatch {
+  #     name = "fno-common.patch";
+  #     url = "https://github.com/tvheadend/tvheadend/commit/bd92f1389f1aacdd08e913b0383a0ca9dc223153.patch";
+  #     sha256 = "17bsx6mnv4pjiayvx1d57dphva0kvlppvnmmaym06dh4524pnly1";
+  #   })
+  # ];
 
   nativeBuildInputs = [
     makeWrapper
@@ -64,10 +70,15 @@ in stdenv.mkDerivation {
     avahi
     bzip2
     dbus
-    ffmpeg_4 # depends on libav
+    ffmpeg # depends on libav
     gettext
     gzip
     libiconv
+    libdvbcsa
+    libvpx
+    libopus
+    x264
+    x265
     openssl
     uriparser
     zlib
