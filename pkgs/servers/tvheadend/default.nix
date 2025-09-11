@@ -30,7 +30,7 @@
 }:
 
 let
-  version = "4.2.8";
+  version = "4.3-unstable-2025-09-09";
 in stdenv.mkDerivation {
   pname = "tvheadend";
   inherit version;
