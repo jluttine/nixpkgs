@@ -316,19 +316,20 @@ in
         ${pkgs.envsubst}/bin/envsubst \
           -i ${configFile} \
           -o ${cfg.dataDir}/monerod.conf
-      ''
+      '' + (
         # Create SSL key and certificate if they don't exist yet
         #
         # Fingerprint with sudo openssl x509 -in /var/lib/monero/ssl-certificate.pem -fingerprint -sha256:
         # 73:F6:99:3A:0F:B8:CF:21:29:74:26:A8:89:DC:4A:79:54:37:1F:CC:90:0E:12:22:16:7A:B0:CE:7B:15:05:5C
         lib.optionalString cfg.rpc.ssl.enable ''
-        if [[ ! -f ${cfg.rpc.ssl.key} || ! -f ${cfg.rpc.ssl.certificate} ]]
-        then
-          ${pkgs.monero-cli}/bin/monero-gen-ssl-cert \
-            --private-key-filename ${cfg.rpc.ssl.key} \
-            --certificate-filename ${cfg.rpc.ssl.certificate}
-        fi
-      '';
+          if [[ ! -f ${cfg.rpc.ssl.key} || ! -f ${cfg.rpc.ssl.certificate} ]]
+          then
+            ${pkgs.monero-cli}/bin/monero-gen-ssl-cert \
+              --private-key-filename ${cfg.rpc.ssl.key} \
+              --certificate-filename ${cfg.rpc.ssl.certificate}
+          fi
+        ''
+      );
 
       serviceConfig = {
         User = "monero";
