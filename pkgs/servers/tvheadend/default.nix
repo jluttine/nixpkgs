@@ -30,7 +30,7 @@
 }:
 
 let
-  version = "4.3-unstable-2025-09-09";
+  version = "4.3-unstable-2026-02-06";
 in stdenv.mkDerivation {
   pname = "tvheadend";
   inherit version;
@@ -38,9 +38,9 @@ in stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "tvheadend";
     repo = "tvheadend";
-    # There are no releases, so use the latest commit (September 9, 2025)
-    rev = "664cc1b621695b7933f6be1387c2031b401b33fa";
-    sha256 = "sha256-43NiqQ8U3K04Om3cmbbZPCrJw6TOf8fUd/xQYs51mUg=";
+    # February 6, 2026
+    rev = "bdad6de10084e37783c5508ea59ada33c080e746";
+    sha256 = "sha256-yaumtpdvTO2kzDkSA8X8MNNvKWq5w5l4uRSR+pD3ZIM=";
   };
 
   outputs = [
